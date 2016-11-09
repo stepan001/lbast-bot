@@ -1,0 +1,14 @@
+{
+  "name": "lbast_autokach",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aoutokach for lbast.ru game",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "phantomjs-prebuilt": "*",
+    "casperjs": "*"
+  },
+  "author": "ssnikiforov"
+}
