@@ -259,7 +259,7 @@ casper.makeDecisionByStatus = function makeDecision() {
         } else if (status == 1) {
             // this.chooseMainAction();
             casper.then(function() {
-                casper.waiter(240, 600); // do recover
+                casper.waiter(600, 900); // do recover
             });
             casper.then(function() {
                 this.makeDecisionByStatus();
