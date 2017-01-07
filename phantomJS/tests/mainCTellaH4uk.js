@@ -14,7 +14,7 @@ casper.then(function() {
     casper.login(login1, psw1);
 });
 
-casper.repeat(1000, function() {
+casper.repeat(9999, function() {
     casper.then(function() {
         this.makeDecisionByStatus();
     });

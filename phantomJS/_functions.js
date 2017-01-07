@@ -188,7 +188,13 @@ casper.createStatus = function createStatus() {
     healthPrint = healthRate;
     var actualTimeOut = this.getTimeOut();
     timePrint = actualTimeOut;
-    if ((healthRate > 0.8) && (actualTimeOut > 10)) {
+
+    var today = new Date();
+    var hours = today.getHours();
+
+    if (hours >= 0 && hours < 9) {
+        return 4; // it's a night
+    } else if ((healthRate > 0.8) && (actualTimeOut > 10)) {
         return 0; // good, go war
     } else if (((healthRate >= -2) && (healthRate <= 0.8)) && (actualTimeOut > 10)) {
         return 1; // recover life
@@ -254,7 +260,9 @@ casper.makeDecisionByStatus = function makeDecision() {
         this.printStatus(healthPrint, timePrint, statusPrint);
     });
     casper.then(function() {
-        if (status == 0) {
+        if (status == 4) { // it's a night, do dubilnya
+            this.doDubilnya();
+        } else if (status == 0) {
             this.chooseMainAction();
         } else if (status == 1) {
             // this.chooseMainAction();
@@ -716,6 +724,57 @@ casper.doEdaDlyaRybaka = function doEdaDlyaRybaka() {
 
 
 /**
+ * Do dubilnya
+ */
+
+casper.doDubilnya = function doDubilnya() {
+    if (this.isProperLocation('kulakHaosa')) {
+        casper.then(function() {
+            this.echo("Start dubilnya...");
+            this.waiter(3, 6);
+        });
+        casper.then(function() {
+            this.clickLabel('Форпост');
+        });
+        casper.then(function() {
+            this.waiter(3, 6);
+        });
+        casper.then(function() {
+            this.clickLabel('Последний дом');
+        });
+        casper.then(function() {
+            this.waiter(3, 6);
+        });
+        casper.then(function() {
+            this.clickLabel('Исп. дубильный набор');
+        });
+        casper.then(function() {
+            this.echo('Clicked on "use dubilnya". Go to sleep for 31 minutes.');
+        });
+        casper.then(function() {
+            this.waiter(1860, 1860);
+        });
+
+    } else if (this.getCurrentUrl().indexOf('dom.php') != -1) {
+        this.clickLabel('Исп. дубильный набор');
+    } else {
+        casper.then(function() {
+            this.echo("Go to kulak haosa...");
+        });
+        casper.then(function() {
+            this.moveAmulet('kh');
+        });
+        casper.then(function() {
+            casper.waiter(3, 6);
+        });
+        casper.then(function() {
+            casper.doDubilnya();
+        });
+    }
+};
+
+
+/**
  * Do bison
  */
 
@@ -932,7 +991,8 @@ casper.isProperLocation = function isProperLocation(guessedLocation) {
         {key: 'harch2', value: 'Лес Эльсены'},
         {key: 'harch3', value: 'Ущелье призраков'},
         {key: 'edaDlyaRybaka1', value: 'За восточными воротами'},
-        {key: 'edaDlyaRybaka2', value: 'Южное побережье'}
+        {key: 'edaDlyaRybaka2', value: 'Южное побережье'},
+        {key: 'kulakHaosa', value: 'Форпост "Кулак Хаоса"'}
     ];
     var currentLocation = this.fetchText('center center div b span');
     var isProper = false;
