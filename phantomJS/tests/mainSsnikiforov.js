@@ -4,8 +4,8 @@
 casper.userAgent(chromeWindows);
 casper.start();
 
-var login2 = "ssnikiforov";
-var psw2 = "Aaa112233";
+var login2 = loginSsnikiforov;
+var psw2 = pswSsnikiforov;
 casper.then(function() {
     casper.test.comment('SUITE TEST #1. START.');
 });

@@ -4,8 +4,8 @@
 casper.userAgent(chromeLinux);
 casper.start();
 
-var login1 = "CTellaH4uk";
-var psw1 = "Aaa112233";
+var login1 = loginCTellaH4uk;
+var psw1 = pswCTellaH4uk;
 casper.then(function() {
     casper.test.comment('SUITE TEST #1. START.');
 });
